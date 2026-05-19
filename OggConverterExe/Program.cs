@@ -495,7 +495,7 @@ internal sealed class MainForm : Form
     private async Task<int> RunFfmpegAsync(string ffmpeg, string sourcePath, string outputPath, bool overwrite)
     {
         var writeMode = overwrite ? "-y" : "-n";
-        var args = $"-hide_banner -loglevel error {writeMode} -i \"{sourcePath}\" -c:a libvorbis -q:a 5 \"{outputPath}\"";
+        var args = $"-hide_banner -loglevel error {writeMode} -i \"{sourcePath}\" -map 0:a:0 -vn -c:a libvorbis -q:a 5 \"{outputPath}\"";
         using var process = new Process
         {
             StartInfo = new ProcessStartInfo
@@ -1029,3 +1029,4 @@ internal sealed class MainForm : Form
         }
     }
 }
+
