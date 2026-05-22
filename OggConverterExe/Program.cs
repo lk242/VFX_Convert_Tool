@@ -46,7 +46,7 @@ internal sealed class MainForm : Form
 
     public MainForm()
     {
-        Text = "MP3/WAV 批量轉 OGG";
+        Text = "MP3/WAV/OGG 批量轉 OGG";
         Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath) ?? Icon;
         StartPosition = FormStartPosition.CenterScreen;
         MinimumSize = new Size(1120, 820);
@@ -107,7 +107,7 @@ internal sealed class MainForm : Form
         _labels.Add(title);
         var subtitle = new Label
         {
-            Text = "支援 MP3 / WAV，成功轉換後自動整理原始檔到 converted 資料夾",
+            Text = "支援 MP3 / WAV / OGG，成功轉換後自動整理原始檔到 converted 資料夾",
             AutoSize = true,
             Font = new Font(Font.FontFamily, 9.5F),
             ForeColor = Theme.Muted,
@@ -326,7 +326,8 @@ internal sealed class MainForm : Form
 
         var files = Directory.EnumerateFiles(_inputDirText.Text)
             .Where(path => string.Equals(Path.GetExtension(path), ".mp3", StringComparison.OrdinalIgnoreCase) ||
-                           string.Equals(Path.GetExtension(path), ".wav", StringComparison.OrdinalIgnoreCase))
+                           string.Equals(Path.GetExtension(path), ".wav", StringComparison.OrdinalIgnoreCase) ||
+                           string.Equals(Path.GetExtension(path), ".ogg", StringComparison.OrdinalIgnoreCase))
             .OrderBy(Path.GetFileName, StringComparer.CurrentCultureIgnoreCase)
             .ToList();
 
@@ -478,13 +479,13 @@ internal sealed class MainForm : Form
             AddLog($"完成。成功：{success}，略過：{skipped}，失敗：{failed}。");
             RefreshFileList();
             _statusLabel.Text = "完成";
-            MessageBox.Show($"完成。\n成功：{success}\n略過：{skipped}\n失敗：{failed}", "MP3/WAV 轉 OGG", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"完成。\n成功：{success}\n略過：{skipped}\n失敗：{failed}", "MP3/WAV/OGG 轉 OGG", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception ex)
         {
             _statusLabel.Text = "錯誤";
             AddLog(ex.Message);
-            MessageBox.Show(ex.Message, "MP3/WAV 轉 OGG", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "MP3/WAV/OGG 轉 OGG", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {
@@ -1029,4 +1030,3 @@ internal sealed class MainForm : Form
         }
     }
 }
-
